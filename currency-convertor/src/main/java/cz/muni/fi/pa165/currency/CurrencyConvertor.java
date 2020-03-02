@@ -30,7 +30,6 @@ public interface CurrencyConvertor {
      * not available
      *
      */
-    BigDecimal convert(Currency sourceCurrency, Currency targetCurrency,
-            BigDecimal sourceAmount);
+    BigDecimal convert(Currency sourceCurrency, Currency targetCurrency, BigDecimal sourceAmount);
 
 }

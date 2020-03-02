@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.currency;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 
 
@@ -19,8 +20,17 @@ public class CurrencyConvertorImpl implements CurrencyConvertor {
     }
 
     @Override
-    public BigDecimal convert(Currency sourceCurrency, Currency targetCurrency, BigDecimal sourceAmount) {
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
+    public BigDecimal convert(Currency sourceCurrency, Currency targetCurrency, BigDecimal sourceAmount)  {
+        if (sourceCurrency == null || targetCurrency == null || sourceAmount == null) throw new IllegalArgumentException("given currency is null");
 
+        try {
+            BigDecimal rate = exchangeRateTable.getExchangeRate(sourceCurrency, targetCurrency);
+            if (rate == null) {
+                throw new UnknownExchangeRateException("unknown exchange rate");
+            }
+            return rate.multiply(sourceAmount).setScale(2, RoundingMode.HALF_EVEN);
+        }  catch (ExternalServiceFailureException e) {
+                throw new UnknownExchangeRateException("Error when obtaining exchange rate");
+        }
+    }
 }

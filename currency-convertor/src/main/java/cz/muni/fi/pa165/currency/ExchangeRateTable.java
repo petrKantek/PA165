@@ -28,7 +28,6 @@ public interface ExchangeRateTable {
      * @throws ExternalServiceFailureException when lookup for current exchange
      * rate failed.
      */
-    BigDecimal getExchangeRate(Currency sourceCurrency, Currency targetCurrency)
-            throws ExternalServiceFailureException;
+    BigDecimal getExchangeRate(Currency sourceCurrency, Currency targetCurrency) throws ExternalServiceFailureException;
 
 }
